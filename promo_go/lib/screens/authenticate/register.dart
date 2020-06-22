@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:promogo/services/auth.dart';
+import 'package:promogo/shared/constants.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -41,14 +42,17 @@ class _RegisterState extends State<Register> {
           child: Column(children: <Widget>[
             SizedBox(height: 20.0),
             TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'Email'),
                 validator: (val) => val.isEmpty ? 'Enter an email' : null,
                 onChanged: (val) {
                   setState(() => email = val);
                 }),
             SizedBox(height: 20.0),
             TextFormField(
+              decoration: textInputDecoration.copyWith(hintText: 'Password'),
               obscureText: true,
-              validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+              validator: (val) =>
+                  val.length < 6 ? 'Enter a password 6+ chars long' : null,
               onChanged: (val) {
                 setState(() => password = val);
               },
@@ -62,7 +66,8 @@ class _RegisterState extends State<Register> {
                 ),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                    dynamic result = await _auth.registerWithEmailAndPassword(
+                        email, password);
                     if (result == null) {
                       setState(() => error = 'Please supply a valid email');
                     } else {
