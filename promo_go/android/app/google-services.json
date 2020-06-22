@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "981031750176",
+    "firebase_url": "https://promogo-840e6.firebaseio.com",
+    "project_id": "promogo-840e6",
+    "storage_bucket": "promogo-840e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:981031750176:android:936673e1de2efdfb90ca45",
+        "android_client_info": {
+          "package_name": "com.example.promogo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "981031750176-ehpgvvvocacla5t9mq0t0f4851bltt57.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFUpxeO6_QGzzrAS2-gGaPJkQ8Cdy596A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "981031750176-ehpgvvvocacla5t9mq0t0f4851bltt57.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
