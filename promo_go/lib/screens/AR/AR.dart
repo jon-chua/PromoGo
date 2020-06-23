@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart' show rootBundle;
@@ -22,7 +21,7 @@ class _ARState extends State<AR> {
   }
 
   void loadAsset(String name) async {
-    rootBundle.load('lib/assets/images/$name')
+    rootBundle.load('assets/images/$name')
         .then((data) => setState(() => this.imageData = data.buffer.asUint8List()));
   }
 
