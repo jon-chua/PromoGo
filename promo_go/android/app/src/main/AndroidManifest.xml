@@ -5,6 +5,10 @@
          In most cases you can leave this as-is, but you if you want to provide
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.ar" />
+    <uses-feature android:glEsVersion="0x00030000" android:required="true" />
+
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="promogo"
@@ -43,5 +47,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- "AR Required" app, requires "Google Play Services for AR" (ARCore)
+        to be installed, as the app does not include any non-AR features. -->
+        <meta-data android:name="com.google.ar.core" android:value="required" />
     </application>
 </manifest>

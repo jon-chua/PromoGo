@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:promogo/services/auth.dart';
+import 'package:promogo/screens/AR/AR.dart';
 
 class Home extends StatelessWidget {
-
   final AuthService _auth = AuthService();
 
   @override
@@ -15,14 +15,26 @@ class Home extends StatelessWidget {
         elevation: 0.0,
         actions: <Widget>[
           FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('logout'),
-            onPressed: () async {
-              await _auth.signOut();
-            }
-          )
+              icon: Icon(Icons.person),
+              label: Text('logout'),
+              onPressed: () async {
+                await _auth.signOut();
+              })
         ],
+      ),
+      body: RaisedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AR()),
+          );
+        },
+        child: Text(
+          "AR Feature",
+        ),
       ),
     );
   }
 }
+
+
