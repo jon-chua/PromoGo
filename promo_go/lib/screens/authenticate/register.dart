@@ -74,7 +74,7 @@ class _RegisterState extends State<Register> {
           Center(
             child: WhiteCard(
               width: 300,
-              height: 500,
+              height: 590,
               childWidget: Form(
                 key: _formKey,
                 child: Column(
@@ -129,23 +129,17 @@ class _RegisterState extends State<Register> {
                       constraints:
                           const BoxConstraints(minWidth: double.infinity),
                       child: RaisedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState.validate()) {
+                            dynamic result = await _auth
+                                .registerWithEmailAndPassword(email, password);
+                            if (result == null) {
+                            } else {
+                              // User registers and page reloads automatically
+                            }
 //                            Scaffold.of(context).showSnackBar(
 //                                SnackBar(content: Text('Processing Data')));
-                            widget.toggleView();
                           }
-//                              () async {
-//                            if (_formKey.currentState.validate()) {
-//                              dynamic result = await _auth.registerWithEmailAndPassword(
-//                                  email, password);
-//                              if (result == null) {
-//                                setState(() => error = 'Please supply a valid email');
-//                              } else {
-//                                // User registers and page reloads automatically
-//                              }
-//                            }
-//                          },
                         },
                         child: Text(
                           'SIGN UP',
