@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/VisaHackathon.iml" filepath="$PROJECT_DIR$/VisaHackathon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/promo_go/android/app/src/debug/debug.iml" filepath="$PROJECT_DIR$/promo_go/android/app/src/debug/debug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/promo_go/android/app/src/profile/profile.iml" filepath="$PROJECT_DIR$/promo_go/android/app/src/profile/profile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/promo_go/promo_go.iml" filepath="$PROJECT_DIR$/promo_go/promo_go.iml" />
+    </modules>
+  </component>
+</project>
