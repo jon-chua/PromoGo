@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:promogo/services/auth.dart';
 import 'package:promogo/shared/constants.dart';
 
+import './sign_in.dart';
 import '../../widgets/white_card.dart';
 import '../../widgets/custom_text_field.dart';
 
@@ -18,6 +19,12 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+
+  // Text field state
+  String email = '';
+  String password = '';
+  String name = '';
+  String confirmPassword = '';
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +59,7 @@ class _RegisterState extends State<Register> {
             ),
           ),
           Positioned(
-            top: 80,
+            top: 30,
             left: 0,
             width: 150,
             child: Container(
@@ -66,7 +73,9 @@ class _RegisterState extends State<Register> {
           ),
           Center(
             child: WhiteCard(
-              Form(
+              width: 300,
+              height: 500,
+              childWidget: Form(
                 key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -77,10 +86,23 @@ class _RegisterState extends State<Register> {
                       height: 100,
                     ),
                     CustomTextField(
+                      hintText: 'name',
+                      textInputType: TextInputType.text,
+                      obscureText: false,
+                      validator: (val) =>
+                          val.length < 6 ? 'Enter a name' : null,
+                      onChanged: (val) {
+                        setState(() => name = val);
+                      },
+                    ),
+                    CustomTextField(
                       hintText: 'email',
                       textInputType: TextInputType.emailAddress,
                       obscureText: false,
                       validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                      onChanged: (val) {
+                        setState(() => email = val);
+                      },
                     ),
                     CustomTextField(
                       hintText: 'password',
@@ -89,6 +111,19 @@ class _RegisterState extends State<Register> {
                       validator: (val) => val.length < 6
                           ? 'Enter a password 6+ chars long'
                           : null,
+                      onChanged: (val) {
+                        setState(() => password = val);
+                      },
+                    ),
+                    CustomTextField(
+                      hintText: 'password',
+                      textInputType: TextInputType.text,
+                      obscureText: true,
+                      validator: (val) =>
+                          val == password ? 'Passwords do not match' : null,
+                      onChanged: (val) {
+                        setState(() => confirmPassword = val);
+                      },
                     ),
                     ConstrainedBox(
                       constraints:
@@ -113,7 +148,7 @@ class _RegisterState extends State<Register> {
 //                          },
                         },
                         child: Text(
-                          'LOG IN',
+                          'SIGN UP',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -123,12 +158,15 @@ class _RegisterState extends State<Register> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text('No account?'),
+                        Text('Have an account?'),
                         SizedBox(width: 10),
                         FlatButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed(SignIn.routeName);
+                          },
                           child: Text(
-                            'Sign up',
+                            'Login',
                             style: TextStyle(
                               color: Color(0xFFFF9635),
                             ),

@@ -5,12 +5,14 @@ class CustomTextField extends StatelessWidget {
   final TextInputType textInputType;
   final bool obscureText;
   final FormFieldValidator validator;
+  final ValueChanged<String> onChanged;
 
   CustomTextField({
     @required this.hintText,
     @required this.textInputType,
     @required this.obscureText,
     @required this.validator,
+    @required this.onChanged,
   });
 
   @override
@@ -19,6 +21,7 @@ class CustomTextField extends StatelessWidget {
       keyboardType: textInputType,
       obscureText: obscureText,
       validator: validator,
+      onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyle(

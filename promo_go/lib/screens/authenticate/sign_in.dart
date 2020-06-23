@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../services/auth.dart';
 import '../../shared/constants.dart';
 import './register.dart';

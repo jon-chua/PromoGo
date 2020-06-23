@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 
 class WhiteCard extends StatelessWidget {
   final Widget childWidget;
+  final double width;
+  final double height;
 
-  WhiteCard(this.childWidget);
+  WhiteCard({
+    @required this.width,
+    @required this.height,
+    @required this.childWidget,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
-      height: 400,
+      width: width,
+      height: height,
       padding: EdgeInsets.all(20),
       margin: EdgeInsets.only(top: 20),
       decoration: BoxDecoration(
