@@ -118,8 +118,6 @@ class _SignInState extends State<SignIn> {
                               // User sign in and page reloads automatically
                               Navigator.of(context).pushNamed(Home.routeName);
                             }
-//                            Scaffold.of(context).showSnackBar(
-//                                SnackBar(content: Text('Processing Data')));
                           }
                         },
                         child: Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:promogo/screens/authenticate/sign_in.dart';
 import '../../services/auth.dart';
 import '../../screens/AR/AR.dart';
 
@@ -19,7 +20,11 @@ class Home extends StatelessWidget {
               icon: Icon(Icons.person),
               label: Text('logout'),
               onPressed: () async {
-                await _auth.signOut();
+                  dynamic result = await _auth.signOut();
+                  if (result == null) {
+                    Navigator.of(context).pushNamed(SignIn.routeName);
+                  } else {
+                  }
               })
         ],
       ),
