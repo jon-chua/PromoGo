@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:promogo/services/auth.dart';
-import 'package:promogo/shared/constants.dart';
 
 import './sign_in.dart';
 import '../../widgets/white_card.dart';
 import '../../widgets/custom_text_field.dart';
+import '../home/home.dart';
 
 class Register extends StatefulWidget {
   static const routeName = '/register';
@@ -89,8 +89,7 @@ class _RegisterState extends State<Register> {
                       hintText: 'name',
                       textInputType: TextInputType.text,
                       obscureText: false,
-                      validator: (val) =>
-                          val.length < 6 ? 'Enter a name' : null,
+                      validator: (val) => val.isEmpty ? 'Enter a name' : null,
                       onChanged: (val) {
                         setState(() => name = val);
                       },
@@ -120,9 +119,10 @@ class _RegisterState extends State<Register> {
                       textInputType: TextInputType.text,
                       obscureText: true,
                       validator: (val) =>
-                          val == password ? 'Passwords do not match' : null,
+                          val == password ? null : 'Passwords do not match',
                       onChanged: (val) {
                         setState(() => confirmPassword = val);
+                        print('$confirmPassword $password ${val == password}');
                       },
                     ),
                     ConstrainedBox(
@@ -136,6 +136,7 @@ class _RegisterState extends State<Register> {
                             if (result == null) {
                             } else {
                               // User registers and page reloads automatically
+                              Navigator.of(context).pushNamed(Home.routeName);
                             }
 //                            Scaffold.of(context).showSnackBar(
 //                                SnackBar(content: Text('Processing Data')));

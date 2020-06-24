@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import './screens/authenticate/sign_in.dart';
 import './screens/authenticate/register.dart';
+import './screens/home/home.dart';
 import './models/user.dart';
 import './services/auth.dart';
 
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         routes: {
           Register.routeName: (ctx) => Register(),
           SignIn.routeName: (ctx) => SignIn(),
+          Home.routeName: (ctx) => Home(),
         },
       ),
     );

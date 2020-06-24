@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:promogo/services/auth.dart';
-import 'package:promogo/screens/AR/AR.dart';
+import '../../services/auth.dart';
+import '../../screens/AR/AR.dart';
 
 class Home extends StatelessWidget {
+  static const routeName = '/home';
   final AuthService _auth = AuthService();
 
   @override
@@ -36,5 +37,3 @@ class Home extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../services/auth.dart';
-import '../../shared/constants.dart';
 import '../../widgets/white_card.dart';
 import '../../widgets/custom_text_field.dart';
 import './register.dart';
+import '../home/home.dart';
 
 class SignIn extends StatefulWidget {
   static const routeName = '/signin';
@@ -116,6 +116,7 @@ class _SignInState extends State<SignIn> {
                               setState(() => error = 'Invalid credentials');
                             } else {
                               // User sign in and page reloads automatically
+                              Navigator.of(context).pushNamed(Home.routeName);
                             }
 //                            Scaffold.of(context).showSnackBar(
 //                                SnackBar(content: Text('Processing Data')));
@@ -145,7 +146,8 @@ class _SignInState extends State<SignIn> {
                               color: Color(0xFFFF9635),
                             ),
                           ),
-                        )
+                        ),
+                        if (error.isNotEmpty) Text(error),
                       ],
                     )
                   ],
