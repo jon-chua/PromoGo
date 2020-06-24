@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:promogo/services/auth.dart';
 
+import '../../services/auth.dart';
+import '../../shared/constants.dart';
 import './sign_in.dart';
 import '../../widgets/white_card.dart';
 import '../../widgets/custom_text_field.dart';
@@ -25,6 +26,7 @@ class _RegisterState extends State<Register> {
   String password = '';
   String name = '';
   String confirmPassword = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class _RegisterState extends State<Register> {
           Container(
             height: double.infinity,
             width: double.infinity,
-            color: Color(0xFFE5E5E5),
+            color: veryLightGreyColor,
           ),
           Container(
             height: MediaQuery.of(context).size.height / 3,
@@ -122,7 +124,6 @@ class _RegisterState extends State<Register> {
                           val == password ? null : 'Passwords do not match',
                       onChanged: (val) {
                         setState(() => confirmPassword = val);
-                        print('$confirmPassword $password ${val == password}');
                       },
                     ),
                     ConstrainedBox(
@@ -133,7 +134,10 @@ class _RegisterState extends State<Register> {
                           if (_formKey.currentState.validate()) {
                             dynamic result = await _auth
                                 .registerWithEmailAndPassword(email, password);
+                            print(result);
                             if (result == null) {
+                              setState(
+                                  () => error = 'An unknown error occurred.');
                             } else {
                               // User registers and page reloads automatically
                               Navigator.of(context).pushNamed(Home.routeName);
@@ -163,12 +167,17 @@ class _RegisterState extends State<Register> {
                           child: Text(
                             'Login',
                             style: TextStyle(
-                              color: Color(0xFFFF9635),
+                              color: orangeColor,
                             ),
                           ),
                         )
                       ],
-                    )
+                    ),
+                    if (error.isNotEmpty)
+                      Text(
+                        error,
+                        style: TextStyle(color: Theme.of(context).errorColor),
+                      ),
                   ],
                 ),
               ),

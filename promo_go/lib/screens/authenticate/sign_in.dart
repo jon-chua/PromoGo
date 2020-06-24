@@ -5,6 +5,7 @@ import '../../widgets/white_card.dart';
 import '../../widgets/custom_text_field.dart';
 import './register.dart';
 import '../home/home.dart';
+import '../../shared/constants.dart';
 
 class SignIn extends StatefulWidget {
   static const routeName = '/signin';
@@ -141,13 +142,17 @@ class _SignInState extends State<SignIn> {
                           child: Text(
                             'Sign up',
                             style: TextStyle(
-                              color: Color(0xFFFF9635),
+                              color: orangeColor,
                             ),
                           ),
                         ),
-                        if (error.isNotEmpty) Text(error),
                       ],
-                    )
+                    ),
+                    if (error.isNotEmpty)
+                      Text(
+                        error,
+                        style: TextStyle(color: Theme.of(context).errorColor),
+                      ),
                   ],
                 ),
               ),
