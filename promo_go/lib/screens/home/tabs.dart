@@ -4,6 +4,7 @@ import './offers.dart';
 import '../../shared/constants.dart';
 import '../home/capture.dart';
 import '../home/activity.dart';
+import '../home/account.dart';
 
 class Tabs extends StatefulWidget {
   static const routeName = '/tabs';
@@ -18,7 +19,7 @@ class _TabsState extends State<Tabs> {
     Offers(),
     Capture(),
     Activity(),
-    Offers(),
+    Account(),
   ];
   final List<String> appBarTitles = [
     'Targeted Offers',

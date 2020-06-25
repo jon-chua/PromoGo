@@ -48,7 +48,7 @@ class _OffersState extends State<Offers> {
             ],
           ),
           padding: EdgeInsets.all(20),
-          height: MediaQuery.of(context).size.height / 4,
+          height: MediaQuery.of(context).size.height / 4.15,
           child: Column(
             children: [
               SearchBar(),

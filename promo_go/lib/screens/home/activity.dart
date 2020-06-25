@@ -67,39 +67,48 @@ class _ActivityState extends State<Activity> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+      color: lightGreyColor,
       width: double.infinity,
       child: Column(
         children: [
-          ListTile(
-            leading: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/logo.png'),
-              backgroundColor: lightGreyColor,
-              radius: 30,
+          Container(
+            color: Colors.white,
+            child: ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              leading: Image.asset(
+                'assets/images/logo.png',
+                fit: BoxFit.contain,
+              ),
+              title: Text(
+                  "Ready for a mid-year and Phase 2 reset? Enjoy savings of up to \$6 off your first promo capture from now up till 22 June!"),
             ),
-            title: Text(
-                "Ready for a mid-year and Phase 2 reset? Enjoy savings of up to \$6 off your first promo capture from now up till 22 June!"),
           ),
-          Divider(height: 5),
+          Divider(height: 3),
           Expanded(
             child: ListView.builder(
               itemCount: notifications.length,
               itemBuilder: (ctx, i) => Column(
                 children: <Widget>[
-                  ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: AssetImage(notifications[i].imageUrl),
-                      radius: 30,
-                      backgroundColor: lightGreyColor,
-                    ),
-                    title: _getNotificationTitle(notifications[i]),
-                    subtitle: Text(
-                      '${format(notifications[i].dateTime)}',
-                      style: TextStyle(color: mediumGreyColor, fontSize: 12),
+                  Container(
+                    color: Colors.white,
+                    child: ListTile(
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      leading: CircleAvatar(
+                        backgroundImage: AssetImage(notifications[i].imageUrl),
+                        radius: 30,
+                        backgroundColor: lightGreyColor,
+                      ),
+                      title: _getNotificationTitle(notifications[i]),
+                      subtitle: Text(
+                        '${format(notifications[i].dateTime)}',
+                        style: TextStyle(color: mediumGreyColor, fontSize: 12),
+                      ),
                     ),
                   ),
                   Divider(
-                    height: 5,
+                    height: 3,
                   ),
                 ],
               ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:promogo/screens/authenticate/sign_in.dart';
+
 import '../../services/auth.dart';
 import '../../screens/AR/AR.dart';
-import '../../screens/googlemaps/googlemaps.dart';
 
 class Home extends StatelessWidget {
   static const routeName = '/home';
