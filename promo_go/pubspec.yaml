@@ -36,6 +36,8 @@ dependencies:
   arcore_flutter_plugin: ^0.0.5+1
   google_fonts: ^1.1.0
   google_maps_flutter: ^0.5.27+3
+  intl: ^0.16.1
+  timeago: ^2.0.26
 
 
 

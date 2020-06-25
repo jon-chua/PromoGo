@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import './offers.dart';
 import '../../shared/constants.dart';
-import '../home/home.dart';
 import '../home/capture.dart';
+import '../home/activity.dart';
 
 class Tabs extends StatefulWidget {
   static const routeName = '/tabs';
@@ -17,7 +17,7 @@ class _TabsState extends State<Tabs> {
   final List<Widget> _children = [
     Offers(),
     Capture(),
-    Offers(),
+    Activity(),
     Offers(),
   ];
   final List<String> appBarTitles = [
