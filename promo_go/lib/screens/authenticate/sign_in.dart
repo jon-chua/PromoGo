@@ -4,7 +4,7 @@ import '../../services/auth.dart';
 import '../../widgets/white_card.dart';
 import '../../widgets/custom_text_field.dart';
 import './register.dart';
-import '../home/home.dart';
+import '../home/tabs.dart';
 import '../../shared/constants.dart';
 
 class SignIn extends StatefulWidget {
@@ -117,7 +117,7 @@ class _SignInState extends State<SignIn> {
                               setState(() => error = 'Invalid credentials');
                             } else {
                               // User sign in and page reloads automatically
-                              Navigator.of(context).pushNamed(Home.routeName);
+                              Navigator.of(context).pushNamed(Tabs.routeName);
                             }
                           }
                         },

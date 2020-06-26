@@ -21,8 +21,8 @@ class _ARState extends State<AR> {
   }
 
   void loadAsset(String name) async {
-    rootBundle.load('assets/images/$name')
-        .then((data) => setState(() => this.imageData = data.buffer.asUint8List()));
+    rootBundle.load('assets/images/$name').then(
+        (data) => setState(() => this.imageData = data.buffer.asUint8List()));
   }
 
   @override
@@ -52,7 +52,9 @@ class _ARState extends State<AR> {
       context: context,
       builder: (BuildContext context) =>
           AlertDialog(content: Text("You found the promo!")),
-    );
+    ).then((val) {
+      Navigator.pop(context);
+    });
   }
 
   void _addSphere(ArCoreController controller) {
