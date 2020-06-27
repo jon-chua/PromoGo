@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:promogo/models/user.dart';
 import 'package:provider/provider.dart';
 
 import './offers.dart';
 import '../../shared/constants.dart';
 import '../home/capture.dart';
 import '../home/activity.dart';
-import '../home/account.dart';
+import 'account/account.dart';
 import '../../services/database.dart';
 
 class Tabs extends StatefulWidget {
@@ -39,8 +40,11 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
+    User user = Provider.of<User>(context);
+    print(user.uid);
+
     return StreamProvider<QuerySnapshot>.value(
-      value: DatabaseService().profile,
+      value: DatabaseService(uid: user.uid).profile,
       child: Scaffold(
         appBar: AppBar(
           title: Text(appBarTitles[_currentIndex]),

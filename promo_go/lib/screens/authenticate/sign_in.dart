@@ -5,7 +5,6 @@ import '../../services/auth.dart';
 import '../../widgets/white_card.dart';
 import '../../widgets/custom_text_field.dart';
 import './register.dart';
-import '../home/tabs.dart';
 import '../../shared/constants.dart';
 
 class SignIn extends StatefulWidget {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:promogo/screens/home/tabs.dart';
 import 'package:promogo/shared/loading.dart';
 
 import '../../services/auth.dart';
@@ -7,7 +6,6 @@ import '../../shared/constants.dart';
 import './sign_in.dart';
 import '../../widgets/white_card.dart';
 import '../../widgets/custom_text_field.dart';
-import '../home/home.dart';
 
 class Register extends StatefulWidget {
   static const routeName = '/register';
