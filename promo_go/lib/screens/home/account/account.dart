@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:promogo/screens/home/account/edit_profile.dart';
+
+import '../../../shared/constants.dart';
+import '../../../services/auth.dart';
+import '../../authenticate/sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
-
-import '../../shared/constants.dart';
-import '../../services/auth.dart';
-import './edit_profile.dart';
-import '../authenticate/sign_in.dart';
 
 class Account extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -14,9 +15,47 @@ class Account extends StatelessWidget {
   Widget build(BuildContext context) {
     final profile = Provider.of<QuerySnapshot>(context);
     print(profile.documents);
+
     for (var doc in profile.documents) {
       print(doc.data);
     }
+
+    void _showEditProfile() {
+      showModalBottomSheet(context: context, builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: EditProfile(),
+        );
+      });
+    }
+
+    void _showMyPurchaseHistory() {
+      showModalBottomSheet(context: context, builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Text("My Purchase History"),
+        );
+      });
+    }
+
+    void _showMypromos() {
+      showModalBottomSheet(context: context, builder: (context) {
+        return Container(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+            child: Text("My Promos"),
+        );
+      });
+    }
+
+    void _showMyPreferences() {
+      showModalBottomSheet(context: context, builder: (context) {
+        return Container(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+            child: Text("My Preferences"),
+        );
+      });
+    }
+
     return Column(
       children: <Widget>[
         Stack(
@@ -57,7 +96,7 @@ class Account extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ), //`Text` to display
                       onPressed: () {
-                        Navigator.of(context).pushNamed(EditProfile.routeName);
+                        _showEditProfile();
                       },
                     ),
                     SizedBox(width: 10),
@@ -116,6 +155,9 @@ class Account extends StatelessWidget {
                       color: Theme.of(context).primaryColor),
                 ),
                 title: Text("My Purchase History"),
+                onTap: () {
+                  _showMyPurchaseHistory();
+                }
               ),
               Divider(
                 height: 3,
@@ -128,6 +170,9 @@ class Account extends StatelessWidget {
                       color: Theme.of(context).primaryColor),
                 ),
                 title: Text("My Promos"),
+                onTap: () {
+                  _showMypromos();
+                },
               ),
               Divider(
                 height: 3,
@@ -140,6 +185,9 @@ class Account extends StatelessWidget {
                       color: Theme.of(context).primaryColor),
                 ),
                 title: Text("My Preferences"),
+                onTap: () {
+                  _showMyPreferences();
+                },
               ),
               Divider(
                 height: 3,
