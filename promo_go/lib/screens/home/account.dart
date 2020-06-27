@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../shared/constants.dart';
 import '../../services/auth.dart';
+import './edit_profile.dart';
 import '../authenticate/sign_in.dart';
 
 class Account extends StatelessWidget {
@@ -55,7 +56,9 @@ class Account extends StatelessWidget {
                         'Edit Profile',
                         style: TextStyle(color: Colors.white),
                       ), //`Text` to display
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(EditProfile.routeName);
+                      },
                     ),
                     SizedBox(width: 10),
                     FlatButton.icon(

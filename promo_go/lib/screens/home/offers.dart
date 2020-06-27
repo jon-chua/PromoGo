@@ -58,7 +58,6 @@ class _OffersState extends State<Offers> {
                   InkWell(
                     onTap: () {
                       setState(() => filter = Filter.all);
-                      print(filter);
                     },
                     child: Chip(
                       backgroundColor:
