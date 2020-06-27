@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 import '../../shared/constants.dart';
 import '../../services/auth.dart';
 import '../authenticate/sign_in.dart';
-import './edit_profile.dart';
 
 class Account extends StatelessWidget {
   final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
+    final profile = Provider.of<QuerySnapshot>(context);
+    print(profile.documents);
+    for (var doc in profile.documents) {
+      print(doc.data);
+    }
     return Column(
       children: <Widget>[
         Stack(
@@ -49,9 +55,7 @@ class Account extends StatelessWidget {
                         'Edit Profile',
                         style: TextStyle(color: Colors.white),
                       ), //`Text` to display
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(EditProfile.routeName);
-                      },
+                      onPressed: () {},
                     ),
                     SizedBox(width: 10),
                     FlatButton.icon(
