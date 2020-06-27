@@ -7,6 +7,8 @@ import './screens/authenticate/sign_in.dart';
 import './screens/authenticate/register.dart';
 import './screens/home/home.dart';
 import './screens/home/tabs.dart';
+import './screens/home/edit_profile.dart';
+import './screens/AR/AR.dart';
 import './models/user.dart';
 import './services/auth.dart';
 
@@ -45,6 +47,8 @@ class MyApp extends StatelessWidget {
           SignIn.routeName: (ctx) => SignIn(),
           Home.routeName: (ctx) => Home(),
           Tabs.routeName: (ctx) => Tabs(),
+          EditProfile.routeName: (ctx) => EditProfile(),
+          AR.routeName: (ctx) => AR(),
         },
       ),
     );

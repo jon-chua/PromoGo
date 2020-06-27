@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:promogo/screens/AR/AR.dart';
+
+import '../AR/AR.dart';
 
 class GoogleMaps extends StatefulWidget {
   @override
@@ -27,10 +28,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
             title: merchant.name + " at " + merchant.address,
             snippet: "Capture me now!",
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AR()),
-              );
+              Navigator.pushNamed(context, AR.routeName);
             },
           ),
         );

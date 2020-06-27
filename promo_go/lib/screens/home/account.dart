@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../shared/constants.dart';
 import '../../services/auth.dart';
 import '../authenticate/sign_in.dart';
+import './edit_profile.dart';
 
 class Account extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -48,7 +49,9 @@ class Account extends StatelessWidget {
                         'Edit Profile',
                         style: TextStyle(color: Colors.white),
                       ), //`Text` to display
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(EditProfile.routeName);
+                      },
                     ),
                     SizedBox(width: 10),
                     FlatButton.icon(

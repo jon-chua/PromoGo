@@ -39,8 +39,15 @@ dependencies:
   intl: ^0.16.1
   timeago: ^2.0.26
   flutter_spinkit: ^4.1.2+1
+  flutter_launcher_icons: ^0.7.5
 
-
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/images/launcher.png"
+  image_path_android: "assets/images/launcher.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/logo.png"
 
 
 dev_dependencies:

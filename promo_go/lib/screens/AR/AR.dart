@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 
 class AR extends StatefulWidget {
+  static const routeName = '/ar';
   @override
   _ARState createState() => _ARState();
 }
