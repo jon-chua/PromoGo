@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:promogo/models/user.dart';
+import 'package:promogo/models/userid.dart';
+import 'package:promogo/models/userprofile.dart';
 import 'package:provider/provider.dart';
 
 import './offers.dart';
@@ -40,11 +40,11 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<User>(context);
+    UserID user = Provider.of<UserID>(context);
     print(user.uid);
 
-    return StreamProvider<QuerySnapshot>.value(
-      value: DatabaseService(uid: user.uid).profile,
+    return StreamProvider<UserProfile>.value(
+      value: DatabaseService(userID: user).userProfile,
       child: Scaffold(
         appBar: AppBar(
           title: Text(appBarTitles[_currentIndex]),
