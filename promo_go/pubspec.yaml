@@ -38,6 +38,8 @@ dependencies:
   google_maps_flutter: ^0.5.27+3
   intl: ^0.16.1
   timeago: ^2.0.26
+  flutter_spinkit: ^4.1.2+1
+
 
 
 

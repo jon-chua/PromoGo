@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:promogo/shared/loading.dart';
 
 import '../../services/auth.dart';
 import '../../widgets/white_card.dart';
@@ -20,6 +21,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   // Text field state
   String email = '';
@@ -28,7 +30,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return loading ? Loading() : Material(
       child: Stack(
         children: <Widget>[
           Container(
@@ -111,12 +113,15 @@ class _SignInState extends State<SignIn> {
                       child: RaisedButton(
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
+                            setState(() => loading = true);
                             dynamic result = await _auth
                                 .signInWithEmailAndPassword(email, password);
                             if (result == null) {
-                              setState(() => error = 'Invalid credentials');
+                              setState(() {
+                                error = 'Invalid credentials';
+                                loading = false;
+                              });
                             } else {
-                              // User sign in and page reloads automatically
                               Navigator.of(context).pushNamed(Tabs.routeName);
                             }
                           }

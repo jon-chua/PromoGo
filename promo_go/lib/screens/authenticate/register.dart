@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:promogo/screens/home/tabs.dart';
+import 'package:promogo/shared/loading.dart';
 
 import '../../services/auth.dart';
 import '../../shared/constants.dart';
@@ -20,6 +22,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   // Text field state
   String email = '';
@@ -30,7 +33,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return loading ? Loading() : Material(
       child: Stack(
         children: <Widget>[
           Container(
@@ -132,18 +135,17 @@ class _RegisterState extends State<Register> {
                       child: RaisedButton(
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
+                            setState(() => loading = true);
                             dynamic result = await _auth
                                 .registerWithEmailAndPassword(email, password);
-                            print(result);
                             if (result == null) {
-                              setState(
-                                  () => error = 'An unknown error occurred.');
+                              setState(() {
+                                error = 'An unknown error occurred';
+                                loading = false;
+                              });
                             } else {
-                              // User registers and page reloads automatically
-                              Navigator.of(context).pushNamed(Home.routeName);
+                              Navigator.of(context).pushNamed(Tabs.routeName);
                             }
-//                            Scaffold.of(context).showSnackBar(
-//                                SnackBar(content: Text('Processing Data')));
                           }
                         },
                         child: Text(
