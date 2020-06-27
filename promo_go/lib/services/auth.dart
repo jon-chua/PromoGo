@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:promogo/models/user.dart';
+import 'package:promogo/services/database.dart';
 
 class AuthService {
 
@@ -27,6 +28,7 @@ class AuthService {
       return null;
     }
   }
+
   // Sign in with email & password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
@@ -42,11 +44,14 @@ class AuthService {
 
 
   // Register with email & password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(String email, String password, String name) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
+
+      // Create a new document for the user with the uid
+      await DatabaseService(uid: user.uid).updateUserData(name, [], [], 'myPreferences');
       return _userFromFirebaseUser(user);
     } catch(e) {
       print(e.toString());

@@ -137,15 +137,17 @@ class _RegisterState extends State<Register> {
                           if (_formKey.currentState.validate()) {
                             setState(() => loading = true);
                             dynamic result = await _auth
-                                .registerWithEmailAndPassword(email, password);
+                                .registerWithEmailAndPassword(email, password, name);
+
+                            // Received results
                             if (result == null) {
                               setState(() {
-                                error = 'An unknown error occurred';
-                                loading = false;
+                                error = 'Email already exists';
                               });
-                            } else {
-                              Navigator.of(context).pushNamed(Tabs.routeName);
                             }
+                            setState(() {
+                              loading = false;
+                            });
                           }
                         },
                         child: Text(

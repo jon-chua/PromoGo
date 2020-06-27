@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './offers.dart';
 import '../../shared/constants.dart';
 import '../home/capture.dart';
 import '../home/activity.dart';
 import '../home/account.dart';
+import '../../services/database.dart';
 
 class Tabs extends StatefulWidget {
   static const routeName = '/tabs';
@@ -36,36 +39,41 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(appBarTitles[_currentIndex]),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTabTapped, // new
-        currentIndex: _currentIndex, // new
-        backgroundColor: Colors.white,
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: lightGreyColor,
-        items: [
-          new BottomNavigationBarItem(
-            icon: Icon(Icons.shop),
-            title: Text('Offers'),
-          ),
-          new BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            title: Text('Capture'),
-          ),
-          new BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            title: Text('Activity'),
-          ),
-          new BottomNavigationBarItem(
-            icon: Icon(Icons.face),
-            title: Text('Account'),
-          )
-        ],
+    return StreamProvider<QuerySnapshot>.value(
+      value: DatabaseService().profile,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(appBarTitles[_currentIndex]),
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+        body: _children[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: onTabTapped,
+          // new
+          currentIndex: _currentIndex,
+          // new
+          backgroundColor: Colors.white,
+          selectedItemColor: Theme.of(context).primaryColor,
+          unselectedItemColor: lightGreyColor,
+          items: [
+            new BottomNavigationBarItem(
+              icon: Icon(Icons.shop),
+              title: Text('Offers'),
+            ),
+            new BottomNavigationBarItem(
+              icon: Icon(Icons.explore),
+              title: Text('Capture'),
+            ),
+            new BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              title: Text('Activity'),
+            ),
+            new BottomNavigationBarItem(
+              icon: Icon(Icons.face),
+              title: Text('Account'),
+            )
+          ],
+        ),
       ),
     );
   }
