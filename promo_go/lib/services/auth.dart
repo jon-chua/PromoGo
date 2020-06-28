@@ -1,35 +1,38 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:promogo/models/user.dart';
+import 'package:promogo/models/promo.dart';
+import 'package:promogo/models/userid.dart';
 import 'package:promogo/services/database.dart';
 
 class AuthService {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Create user obj based on FirebaseUser
-  User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;
-  } 
-
-  // Auth change user stream
-  Stream<User> get user {
-    return _auth.onAuthStateChanged
-      .map(_userFromFirebaseUser);
+  UserID _userFromFirebaseUser(FirebaseUser user) {
+    return user != null ? UserID(uid: user.uid) : null;
   }
 
-  // Sign in anon
+  // Auth change user stream
+  Stream<UserID> get user {
+    print("In StreamUserID get user");
+    print(_auth.onAuthStateChanged.first);
+    return _auth.onAuthStateChanged.map((x) {
+      return _userFromFirebaseUser(x);
+    });
+  }
+
+// Sign in anon
   Future signInAnon() async {
     try {
       AuthResult result = await _auth.signInAnonymously();
       FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
-  // Sign in with email & password
+// Sign in with email & password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(
@@ -42,24 +45,26 @@ class AuthService {
     }
   }
 
-
-  // Register with email & password
-  Future registerWithEmailAndPassword(String email, String password, String name) async {
+// Register with email & password
+  Future registerWithEmailAndPassword(
+      String email, String password, String name) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
 
       // Create a new document for the user with the uid
-      await DatabaseService(uid: user.uid).updateUserData(name, [], [], 'myPreferences');
-      return _userFromFirebaseUser(user);
-    } catch(e) {
+      UserID userID = _userFromFirebaseUser(user);
+      await DatabaseService(userID: userID)
+          .initiateUserData(name, email, [], [], 'myPreferences');
+      return userID;
+    } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
-  // Sign out
+// Sign out
   Future signOut() async {
     try {
       return await _auth.signOut();
@@ -68,5 +73,4 @@ class AuthService {
       return null;
     }
   }
-
 }
