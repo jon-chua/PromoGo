@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:promogo/models/userprofile.dart';
 import 'package:promogo/screens/home/account/edit_profile.dart';
+import 'package:provider/provider.dart';
 
 import '../../../shared/constants.dart';
 import '../../../services/auth.dart';
 import '../../authenticate/sign_in.dart';
-import 'package:provider/provider.dart';
 
 class Account extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -16,39 +16,47 @@ class Account extends StatelessWidget {
     final userProfile = Provider.of<UserProfile>(context);
 
     void _showEditProfile() {
-      showModalBottomSheet(context: context, builder: (context) {
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: EditProfile(userProfile: userProfile),
-        );
-      });
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: EditProfile(userProfile: userProfile),
+            );
+          });
     }
 
     void _showMyPurchaseHistory() {
-      showModalBottomSheet(context: context, builder: (context) {
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: Text("My Purchase History"),
-        );
-      });
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: Text("My Purchase History"),
+            );
+          });
     }
 
     void _showMypromos() {
-      showModalBottomSheet(context: context, builder: (context) {
-        return Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-            child: Text("My Promos"),
-        );
-      });
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: Text("My Promos"),
+            );
+          });
     }
 
     void _showMyPreferences() {
-      showModalBottomSheet(context: context, builder: (context) {
-        return Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-            child: Text("My Preferences"),
-        );
-      });
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: Text("My Preferences"),
+            );
+          });
     }
 
     return Column(
@@ -144,16 +152,15 @@ class Account extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: lightGreyColor,
-                  child: Icon(Icons.receipt,
-                      color: Theme.of(context).primaryColor),
-                ),
-                title: Text("My Purchase History"),
-                onTap: () {
-                  _showMyPurchaseHistory();
-                }
-              ),
+                  leading: CircleAvatar(
+                    backgroundColor: lightGreyColor,
+                    child: Icon(Icons.receipt,
+                        color: Theme.of(context).primaryColor),
+                  ),
+                  title: Text("My Purchase History"),
+                  onTap: () {
+                    _showMyPurchaseHistory();
+                  }),
               Divider(
                 height: 3,
                 color: mediumGreyColor,

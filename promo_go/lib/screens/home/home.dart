@@ -1,45 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:promogo/screens/authenticate/sign_in.dart';
+import 'package:promogo/models/userid.dart';
+import 'package:promogo/models/userprofile.dart';
+import 'package:provider/provider.dart';
 
-import '../../services/auth.dart';
-import '../../screens/AR/AR.dart';
+import '../../shared/constants.dart';
+import '../../services/database.dart';
+import '../AR/AR.dart';
+import 'edit_profile.dart';
+import 'tabs.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   static const routeName = '/home';
-  final AuthService _auth = AuthService();
 
   @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.brown[50],
-        appBar: AppBar(
-          title: Text('Promo Go'),
-          backgroundColor: Colors.brown[400],
-          elevation: 0.0,
-          actions: <Widget>[
-            FlatButton.icon(
-                icon: Icon(Icons.person),
-                label: Text('logout'),
-                onPressed: () async {
-                  dynamic result = await _auth.signOut();
-                  if (result == null) {
-                    Navigator.of(context).pushNamed(SignIn.routeName);
-                  } else {}
-                })
-          ],
-        ),
-        body: Column(children: [
-          RaisedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AR()),
-              );
-            },
-            child: Text(
-              "AR Feature",
-            ),
-          ),
-        ]));
+    UserID user = Provider.of<UserID>(context);
+    print(user.uid);
+
+    return StreamProvider<UserProfile>.value(
+      value: DatabaseService(userID: user).userProfile,
+      child: MaterialApp(
+          home: Tabs(),
+          routes: {
+            Tabs.routeName: (ctx) => Tabs(),
+            AR.routeName: (ctx) => AR(),
+            EditProfile.routeName: (ctx) => EditProfile(),
+          },
+          theme: themeData(context)),
+    );
   }
 }

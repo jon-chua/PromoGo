@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:promogo/models/userid.dart';
 import 'package:promogo/screens/authenticate/authenticate.dart';
-import 'package:promogo/screens/home/tabs.dart';
+import 'package:promogo/screens/home/home.dart';
 import 'package:promogo/shared/constants.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/home/tabs.dart';
+import '../screens/home/home.dart';
 import '../models/userid.dart';
 
 class Wrapper extends StatelessWidget {
@@ -18,7 +18,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       screen = Authenticate();
     } else {
-      screen = Tabs();
+      screen = Home();
     }
 //    screen = Authenticate();
     return MaterialApp(
