@@ -21,39 +21,47 @@ class Account extends StatelessWidget {
     }
 
     void _showEditProfile() {
-      showModalBottomSheet(context: context, builder: (context) {
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: EditProfile(),
-        );
-      });
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: EditProfile(),
+            );
+          });
     }
 
     void _showMyPurchaseHistory() {
-      showModalBottomSheet(context: context, builder: (context) {
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: Text("My Purchase History"),
-        );
-      });
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: Text("My Purchase History"),
+            );
+          });
     }
 
     void _showMypromos() {
-      showModalBottomSheet(context: context, builder: (context) {
-        return Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-            child: Text("My Promos"),
-        );
-      });
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: Text("My Promos"),
+            );
+          });
     }
 
     void _showMyPreferences() {
-      showModalBottomSheet(context: context, builder: (context) {
-        return Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-            child: Text("My Preferences"),
-        );
-      });
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: Text("My Preferences"),
+            );
+          });
     }
 
     return Column(
@@ -149,16 +157,15 @@ class Account extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: lightGreyColor,
-                  child: Icon(Icons.receipt,
-                      color: Theme.of(context).primaryColor),
-                ),
-                title: Text("My Purchase History"),
-                onTap: () {
-                  _showMyPurchaseHistory();
-                }
-              ),
+                  leading: CircleAvatar(
+                    backgroundColor: lightGreyColor,
+                    child: Icon(Icons.receipt,
+                        color: Theme.of(context).primaryColor),
+                  ),
+                  title: Text("My Purchase History"),
+                  onTap: () {
+                    _showMyPurchaseHistory();
+                  }),
               Divider(
                 height: 3,
                 color: mediumGreyColor,
