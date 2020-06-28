@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:promogo/widgets/search_bar.dart';
 
+import 'payments.dart';
+import '../../widgets/search_bar.dart';
+import '../../widgets/small_white_card.dart';
 import '../../shared/constants.dart';
 import '../../models/offer.dart';
 
@@ -35,21 +37,10 @@ class _OffersState extends State<Offers> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
-          ),
-          padding: EdgeInsets.all(20),
+        SmallWhiteCard(
           height: MediaQuery.of(context).size.height / 4.15,
-          child: Column(
+          width: double.infinity,
+          childWidget: Column(
             children: [
               SearchBar(),
               SizedBox(height: 10),
@@ -109,6 +100,9 @@ class _OffersState extends State<Offers> {
                     padding: EdgeInsets.all(10),
                     color: Colors.white,
                     child: ListTile(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(Payments.routeName);
+                      },
                       leading: CircleAvatar(
                         backgroundImage: AssetImage('assets/images/miniso.jpg'),
                         radius: 30,
