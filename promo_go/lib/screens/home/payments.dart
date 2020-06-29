@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:promogo/visa/visa-direct.dart';
+import 'package:promogo/visa/visa-merchant-offers.dart';
+
 
 import '../../shared/constants.dart';
 
@@ -133,7 +138,27 @@ class Payments extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  final response = await VisaDirect.visaDirect();
+
+                  if (response.statusCode == 200) {
+                    // OK
+                    showDialog(
+                        context: context,
+                        builder: (_) => new AlertDialog(
+                              title: new Text("Success"),
+                              content: new Text("Transaction was successful!"),
+                            ));
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (_) => new AlertDialog(
+                              title: new Text("Error"),
+                              content: new Text("Unsuccessful transaction: " +
+                                  response.reasonPhrase),
+                            ));
+                  }
+                },
               ),
             ),
           )
