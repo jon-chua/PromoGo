@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import '../AR/AR.dart';
+import 'package:promogo/services/locator.dart';
 
 class GoogleMaps extends StatefulWidget {
   @override
@@ -11,30 +10,32 @@ class GoogleMaps extends StatefulWidget {
 class _GoogleMapsState extends State<GoogleMaps> {
   GoogleMapController mapController;
   final LatLng _center = const LatLng(1.3521, 103.8198);
+  LocationService locationService = LocationService();
 
   final Map<String, Marker> _markers = {};
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
-    final merchants = await getMerchants();
-
-    setState(() {
-      _markers.clear();
-      for (final merchant in merchants) {
-        final marker = Marker(
-          markerId: MarkerId(merchant.name),
-          position: LatLng(merchant.lat, merchant.lng),
-          infoWindow: InfoWindow(
-            title: merchant.name + " at " + merchant.address,
-            snippet: "Capture me now!",
-            onTap: () {
-              Navigator.pushNamed(context, AR.routeName);
-            },
-          ),
-        );
-        _markers[merchant.name] = marker;
-      }
-    });
+    await locationService.getMerchantLocation();
+    final merchants = await locationService.getMerchantLocation();
+    print(merchants);
+//    setState(() {
+//      _markers.clear();
+//      for (final merchant in merchants) {
+//        final marker = Marker(
+//          markerId: MarkerId(merchant.name),
+//          position: LatLng(merchant.lat, merchant.lng),
+//          infoWindow: InfoWindow(
+//            title: merchant.name + " at " + merchant.address,
+//            snippet: "Capture me now!",
+//            onTap: () {
+//              Navigator.pushNamed(context, AR.routeName);
+//            },
+//          ),
+//        );
+//        _markers[merchant.name] = marker;
+//      }
+//    });
   }
 
   // To get the list of merchants
