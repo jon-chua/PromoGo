@@ -1,9 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:http/io_client.dart';
 
 class VisaAuthentication {
-  static Future<HttpClient> visaAuthClient() async {
+  static Map<String, String> defaultHeader = {
+  "authorization": "Basic NFU5WjY5UVBNQzJVWlBIQzBCSlAyMVVKT1RadGE2YV9ldm9FUEFiYTdKM0R4R3dSZzowa0VlZGY5ZFFuQ1ZtSktoMkVoeg==",
+  "accept": "application/json",
+  "content-type": "application/json"
+  };
+
+  static Future<IOClient> visaAuthClient() async {
     SecurityContext securityContext = new SecurityContext();
 
     final ByteData crtData = await rootBundle.load('assets/cert.pem');
@@ -15,8 +22,10 @@ class VisaAuthentication {
     securityContext.useCertificateChainBytes(crtData.buffer.asUint8List());
     securityContext.usePrivateKeyBytes(prvKey.buffer.asUint8List());
 
-    return new HttpClient(context: securityContext)
+    final HttpClient client = new HttpClient(context: securityContext)
       ..badCertificateCallback =
           ((X509Certificate cert, String host, int port) => true);
+
+    return new IOClient(client);
   }
 }

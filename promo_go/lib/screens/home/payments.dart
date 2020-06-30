@@ -1,9 +1,8 @@
-import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:promogo/visa/visa-direct.dart';
-import 'package:promogo/visa/visa-merchant-offers.dart';
-
+import 'package:http/http.dart';
 
 import '../../shared/constants.dart';
 
@@ -139,7 +138,8 @@ class Payments extends StatelessWidget {
                   ),
                 ),
                 onPressed: () async {
-                  final response = await VisaDirect.visaDirect();
+                  Response response = await VisaDirect.visaDirect();
+                  log(response.body);
 
                   if (response.statusCode == 200) {
                     // OK

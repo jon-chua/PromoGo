@@ -70,6 +70,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/cert.pem
+    - assets/key_be253fad-2454-430d-80cc-8d405fa6346a.pem
     - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
