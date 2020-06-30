@@ -74,6 +74,7 @@ flutter:
     - assets/key_be253fad-2454-430d-80cc-8d405fa6346a.pem
     - assets/images/
 
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

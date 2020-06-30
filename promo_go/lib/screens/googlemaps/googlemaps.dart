@@ -17,8 +17,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
   Future<void> _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
     await locationService.getMerchantLocation();
-    final merchants = await locationService.getMerchantLocation();
-    print(merchants);
+//    print(merchants);
 //    setState(() {
 //      _markers.clear();
 //      for (final merchant in merchants) {

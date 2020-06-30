@@ -1,52 +1,76 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:http/io_client.dart';
 import 'package:intl/intl.dart';
+import 'package:promogo/constants.dart';
+import 'package:promogo/models/merchant.dart';
+import 'package:promogo/visa/visa-authentication.dart';
 
 import 'user_location.dart';
 
 class LocationService {
   static String url = "https://sandbox.api.visa.com/merchantlocator/v1/locator";
   static var now = new DateTime.now().toUtc();
-  static var newFormat = DateFormat("YYYY-MM-DDThh:mm:ss.sss");
+  static var newFormat = DateFormat("yyyy-MM-ddThh:mm:ss.sss");
   String formattedTime = newFormat.format(now);
   UserLocation userLocation = UserLocation();
-  var userLat;
-  var userLong;
-
-  void getUserCurrentLocation() async {
-    var userLocationData = await userLocation.getUserCurrentLocation();
-    userLat = userLocationData.latitude;
-    userLong = userLocationData.longitude;
-  }
 
   Future<dynamic> getMerchantLocation() async {
-    getUserCurrentLocation();
+    var merchantList = new Set();
+    var userLocationData = await userLocation.getUserCurrentLocation();
+    var userLat = userLocationData.latitude;
+    var userLong = userLocationData.longitude;
+    IOClient client = await VisaAuthentication.visaAuthClient();
 
-    String map =
-        '{"header":{"messageDateTime":"2020-06-29T06:22:45.903","requestMessageId":"Request","startIndex":"0"},"searchAttrList":{merchantName":"Starbucks","merchantCountryCode":"840","latitude":"37.363922","longitude":"-121.929163","distance":"10","distanceUnit":"M"},"responseAttrList":["GNLOCATOR"],"searchOptions":{"maxRecords":"10","matchIndicators":true,"matchScore":true}}';
+    for (var cat in kMerchantList) {
+      var postBody = {
+        "header": {
+          "messageDateTime": "$formattedTime",
+          "requestMessageId": "Request_001",
+          "startIndex": "0"
+        },
+        "searchAttrList": {
+          //"merchantName": "Starbucks",
+          "merchantCategoryCode": [cat],
+          "merchantCountryCode": "840",
+          "latitude": "$userLat",
+          "longitude": "$userLong",
+          "distance": "100",
+          "distanceUnit": "M"
+        },
+        "responseAttrList": ["GNLOCATOR"],
+        "searchOptions": {"matchIndicators": "true", "matchScore": "true"}
+      };
 
-    String basicAuth = 'Basic ' +
-        base64Encode(utf8.encode('huutienvt98@gmail.com:atevvscdA1'));
-    print(basicAuth);
-    http.Response response = await http.post(
-      url,
-      headers: <String, String>{
-        'Authorization': basicAuth,
-        'Accept': 'application/json',
-        'content-type': "application/json",
-      },
-      body: map,
-    );
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-      String data = response.body;
-      var decodedData = jsonDecode(data);
-      print(decodedData);
-      return decodedData;
-    } else {
-      print(response.statusCode);
-      print(response.body);
+      Response response = await client.post(url,
+          headers: VisaAuthentication.defaultHeader,
+          body: jsonEncode(postBody));
+
+      print("Result: " + response.body);
+
+      var data = jsonDecode(response.body);
+      print("JSON object: ");
+      print(data);
+      if (data["merchantLocatorServiceResponse"]["response"] != null) {
+        for (var merchant in data["merchantLocatorServiceResponse"]
+            ["response"]) {
+          var m = new Merchant(
+            name: merchant["visaStoreName"],
+            latitude: merchant["locationAddressLatitude"],
+            longitude: merchant["locationAddressLongitude"],
+            address: merchant["merchantStreetAddress"],
+            city: merchant["merchantStreetCity"],
+            postalCode: merchant["merchantPostalCode"],
+            url: merchant["url"],
+            visaMerchantId: merchant["visaMerchantId"],
+            visaStoreId: merchant["visaStoreId"],
+          );
+          merchantList.add(m);
+        }
+      }
     }
+    print(merchantList.length);
+    return merchantList;
   }
 }
