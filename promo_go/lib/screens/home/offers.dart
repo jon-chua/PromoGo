@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'payments.dart';
-import '../../widgets/search_bar.dart';
 import '../../widgets/small_white_card.dart';
 import '../../shared/constants.dart';
 import '../../models/offer.dart';
@@ -33,6 +32,73 @@ class _OffersState extends State<Offers> {
     )
   ];
 
+  TextEditingController _searchQueryController = TextEditingController();
+  bool _isSearching = false;
+  String searchQuery = "";
+
+  List<Offer> get filteredOffers {
+    List<Offer> filtered =
+        offers.where((offer) => offer.name.contains(searchQuery)).toList();
+    return filtered == null ? [] : filtered;
+  }
+
+  void _startSearch() {
+    ModalRoute.of(context)
+        .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
+
+    setState(() {
+      _isSearching = true;
+    });
+  }
+
+  void updateSearchQuery(String newQuery) {
+    if (_isSearching) {
+      setState(() {
+        searchQuery = newQuery;
+      });
+    }
+  }
+
+  void _stopSearching() {
+    _clearSearchQuery();
+
+    setState(() {
+      _isSearching = false;
+    });
+  }
+
+  void _clearSearchQuery() {
+    setState(() {
+      _searchQueryController.clear();
+      updateSearchQuery("");
+    });
+  }
+
+  List<Widget> _buildActions() {
+    if (_isSearching) {
+      return <Widget>[
+        IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            if (_searchQueryController == null ||
+                _searchQueryController.text.isEmpty) {
+              Navigator.pop(context);
+              return;
+            }
+            _clearSearchQuery();
+          },
+        ),
+      ];
+    }
+
+    return <Widget>[
+      IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: _startSearch,
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,7 +108,36 @@ class _OffersState extends State<Offers> {
           width: double.infinity,
           childWidget: Column(
             children: [
-              SearchBar(),
+              Row(
+                children: <Widget>[
+                  Flexible(
+                    child: TextField(
+                      controller: _searchQueryController,
+                      autofocus: true,
+                      style: TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        hintStyle: TextStyle(
+                          color: Color(0xFFB2B2B2),
+                        ),
+                        fillColor: Color(0xFFEEEEEE),
+                        filled: true,
+                        border: new OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
+                        ),
+                      ),
+                      onChanged: (query) => updateSearchQuery(query),
+                    ),
+                  ),
+                  ..._buildActions(),
+                ],
+              ),
               SizedBox(height: 10),
               Row(
                 children: <Widget>[
@@ -93,7 +188,7 @@ class _OffersState extends State<Offers> {
           child: Material(
             color: lightGreyColor,
             child: ListView.builder(
-              itemCount: offers.length,
+              itemCount: filteredOffers.length,
               itemBuilder: (value, i) => Column(
                 children: <Widget>[
                   Container(
@@ -108,13 +203,13 @@ class _OffersState extends State<Offers> {
                         radius: 30,
                       ),
                       title: Text(
-                        offers[i].name,
+                        filteredOffers[i].name,
                         style: Theme.of(context).textTheme.headline6,
                       ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(offers[i].description),
+                          Text(filteredOffers[i].description),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
@@ -123,11 +218,11 @@ class _OffersState extends State<Offers> {
                                 color: Theme.of(context).primaryColor,
                               ),
                               SizedBox(width: 3),
-                              Text(offers[i].sale),
+                              Text(filteredOffers[i].sale),
                             ],
                           ),
                           Text(
-                            '${offers[i].outletsNum} offers around you',
+                            '${filteredOffers[i].outletsNum} offers around you',
                             style:
                                 TextStyle(color: mediumGreyColor, fontSize: 12),
                           ),
