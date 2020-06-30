@@ -16,8 +16,8 @@ class LocationService {
   String formattedTime = newFormat.format(now);
   UserLocation userLocation = UserLocation();
 
-  Future<dynamic> getMerchantLocation() async {
-    var merchantList = new Set();
+  Future<Set<Merchant>> getMerchantLocation() async {
+    var merchantList = new Set<Merchant>();
     var userLocationData = await userLocation.getUserCurrentLocation();
     var userLat = userLocationData.latitude;
     var userLong = userLocationData.longitude;
@@ -47,14 +47,15 @@ class LocationService {
           headers: VisaAuthentication.defaultHeader,
           body: jsonEncode(postBody));
 
-      print("Result: " + response.body);
+//      print("Result: " + response.body);
 
       var data = jsonDecode(response.body);
-      print("JSON object: ");
-      print(data);
+//      print("JSON object: ");
+//      print(data);
       if (data["merchantLocatorServiceResponse"]["response"] != null) {
         for (var merchant in data["merchantLocatorServiceResponse"]
             ["response"]) {
+          merchant = merchant["responseValues"];
           var m = new Merchant(
             name: merchant["visaStoreName"],
             latitude: merchant["locationAddressLatitude"],
@@ -70,7 +71,7 @@ class LocationService {
         }
       }
     }
-    print(merchantList.length);
+
     return merchantList;
   }
 }
