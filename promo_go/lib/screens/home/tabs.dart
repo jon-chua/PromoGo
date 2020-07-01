@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:promogo/models/promo.dart';
+import 'package:promogo/services/database.dart';
+import 'package:promogo/services/locator.dart';
+import 'package:promogo/services/user_location.dart';
 
 import './offers.dart';
 import '../../shared/constants.dart';
@@ -35,8 +39,32 @@ class _TabsState extends State<Tabs> {
     });
   }
 
+  Future<void> setUpPromoDatabase() async {
+    print("Set up promo database");
+    LocationService locationService = LocationService();
+    UserLocation userLocation = UserLocation();
+    final merchants = await locationService.getMerchantLocation();
+    var promoList = new Set<Promo>();
+    for (final merchant in merchants) {
+      Promo p = Promo(merchant: merchant);
+      promoList.add(p);
+    }
+//    print("Printing promoList");
+//    for (Promo p in promoList) {
+//      print(p.merchant);
+//      print(p.merchant.name);
+//      print(p.merchant.visaMerchantId);
+//      print(p.sale);
+//      print(p.name);
+//      print(p.discount);
+//    }
+    DatabaseService().initiatePromoListData(promoList);
+  }
+
   @override
   Widget build(BuildContext context) {
+//    setUpPromoDatabase(); // Initiate once for firebase
+
     return Scaffold(
       appBar: AppBar(
         title: Text(appBarTitles[_currentIndex]),

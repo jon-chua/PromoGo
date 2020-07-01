@@ -21,7 +21,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     UserID user = Provider.of<UserID>(context);
-    print(user.uid);
 
     return StreamProvider<UserProfile>.value(
       value: DatabaseService(userID: user).userProfile,
