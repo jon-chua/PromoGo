@@ -40,7 +40,6 @@ class _TabsState extends State<Tabs> {
   }
 
   Future<void> setUpPromoDatabase() async {
-    print("Set up promo database");
     LocationService locationService = LocationService();
     UserLocation userLocation = UserLocation();
     final merchants = await locationService.getMerchantLocation();
@@ -49,22 +48,13 @@ class _TabsState extends State<Tabs> {
       Promo p = Promo(merchant: merchant);
       promoList.add(p);
     }
-//    print("Printing promoList");
-//    for (Promo p in promoList) {
-//      print(p.merchant);
-//      print(p.merchant.name);
-//      print(p.merchant.visaMerchantId);
-//      print(p.sale);
-//      print(p.name);
-//      print(p.discount);
-//    }
     DatabaseService().initiatePromoListData(promoList);
   }
 
   @override
   Widget build(BuildContext context) {
 //    setUpPromoDatabase(); // Initiate once for firebase
-    Future<Set<Promo>> promoList = DatabaseService().getPromoList;
+//    Future<Set<Promo>> promoList = DatabaseService().getPromoList; // This is how to retrieve promoList
 
     return Scaffold(
       appBar: AppBar(
