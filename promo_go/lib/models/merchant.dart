@@ -20,4 +20,17 @@ class Merchant {
     this.visaMerchantId,
     this.visaStoreId,
   });
+
+  void printAll() {
+    print(address);
+    print(city);
+    print(latitude);
+    print(longitude);
+    print(name);
+    print(postalCode);
+    print(url);
+    print(visaMerchantId);
+    print(visaStoreId);
+  }
+
 }

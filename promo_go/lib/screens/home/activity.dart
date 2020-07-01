@@ -15,8 +15,8 @@ class _ActivityState extends State<Activity> {
   List<CustomNotification> notifications = [
     CustomNotification(
       promo: Promo(
-        name: 'Popular Bookstore',
-        sale: '\$50 voucher',
+        promoCode: 'Popular Bookstore',
+        salesName: '\$50 voucher',
       ),
       imageUrl: 'assets/images/popular.png',
       notificationType: CustomNotificationType.redemption,
@@ -24,8 +24,8 @@ class _ActivityState extends State<Activity> {
     ),
     CustomNotification(
       promo: Promo(
-        name: 'Popular Bookstore',
-        sale: '\$50 voucher',
+        promoCode: 'Popular Bookstore',
+        salesName: '\$50 voucher',
       ),
       imageUrl: 'assets/images/popular.png',
       notificationType: CustomNotificationType.capture,

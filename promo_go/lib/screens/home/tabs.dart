@@ -64,6 +64,7 @@ class _TabsState extends State<Tabs> {
   @override
   Widget build(BuildContext context) {
 //    setUpPromoDatabase(); // Initiate once for firebase
+    Future<Set<Promo>> promoList = DatabaseService().getPromoList;
 
     return Scaffold(
       appBar: AppBar(

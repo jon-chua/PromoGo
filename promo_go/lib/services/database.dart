@@ -36,20 +36,50 @@ class DatabaseService {
 
   Future<void> initiatePromoListData(Set<Promo> promoList) async {
     print("Initiating promo list data");
-    for(Promo p in promoList) {
+    for (Promo p in promoList) {
       Merchant m = p.merchant;
-      _initiatePromoData(m.name, m.visaStoreId, m.visaMerchantId, p.name, p.discount);
+      _initiatePromoData(
+          m.name,
+          m.latitude,
+          m.longitude,
+          m.address,
+          m.postalCode,
+          m.city,
+          m.visaStoreId,
+          m.visaMerchantId,
+          m.url,
+          p.promoCode,
+          p.discount,
+          p.expiryDate);
     }
   }
 
-  Future<void> _initiatePromoData(String merchantName, String visaStoreId,
-      String visaMerchantId, String promoName, int discount) async {
+  Future<void> _initiatePromoData(
+      String merchantName,
+      String latitude,
+      String longitude,
+      String address,
+      String postalCode,
+      String city,
+      String visaStoreId,
+      String visaMerchantId,
+      String url,
+      String promoName,
+      int discount,
+      DateTime expiryDate) async {
     print("Inserting promo data");
     return await promosCollection.document(promoName).setData({
       'merchantName': merchantName,
+      'latitude': latitude,
+      'longitude': longitude,
+      'address': address,
+      'postalCode': postalCode,
+      'city': city,
       'visaStoreId': visaStoreId,
       'visaMerchantId': visaMerchantId,
-      'discount': discount
+      'url': url,
+      'discount': discount,
+      'expiryDate': expiryDate,
     });
   }
 
@@ -62,6 +92,33 @@ class DatabaseService {
       email: snapshot.data['email'],
       purchaseHistory: [],
     );
+  }
+
+  Set<Promo> _promoListFromSnapshot(
+      Set<Promo> promoList, DocumentSnapshot promo) {
+    Merchant merchant = new Merchant(
+        name: promo.data["merchantName"],
+        latitude: promo.data["latitude"],
+        longitude: promo.data["longitude"],
+        address: promo.data["address"],
+        city: promo.data["city"],
+        postalCode: promo.data["postalCode"],
+        url: promo.data["url"],
+        visaMerchantId: promo.data["visaMerchantId"],
+        visaStoreId: promo.data["visaStoreId"]);
+    Promo p = new Promo(merchant: merchant, promoCode: promo.documentID);
+    promoList.add(p);
+    return promoList;
+  }
+
+  Future<Set<Promo>> get getPromoList async {
+    Set<Promo> promoList = new Set();
+    await promosCollection.getDocuments().then((querySnapShot) {
+      querySnapShot.documents.forEach((promo) {
+        _promoListFromSnapshot(promoList, promo);
+      });
+    });
+    return promoList;
   }
 
   Stream<UserProfile> get userProfile {

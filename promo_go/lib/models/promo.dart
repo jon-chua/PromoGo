@@ -4,22 +4,31 @@ import 'dart:math';
 
 class Promo {
   final Merchant merchant;
-  String sale;
-  String name;
+  String salesName;
+  String promoCode;
   int discount;
+  DateTime expiryDate = DateTime(2020, 12, 31, 23, 59);
 
   Promo({
     this.merchant,
-    this.sale,
-    this.name,
+    this.salesName,
+    this.promoCode,
   }) {
-    name = this.hashCode.toString();
+    promoCode = this.hashCode.toString();
     discount = Random().nextInt(50);
+  }
+
+  void printAll() {
+    merchant.printAll();
+    print(salesName);
+    print(promoCode);
+    print(discount.toString());
+    print(expiryDate.toString());
   }
 
   @override
   String toString() {
     // TODO: implement toString
-    return '${this.sale} for ${this.name}';
+    return '${this.salesName} for ${this.promoCode}';
   }
 }
