@@ -24,15 +24,14 @@ class _OffersState extends State<Offers> {
   List<Offer> offers = [
     Offer(
       name: 'Miniso',
-//      description: 'Electronics & Technology | Home & Furnishing | Junction 8',
       code: 'MINISO50',
       sale: '50% discount off stationery',
       expiryDate: DateTime(2020, 12, 31, 23, 59),
     ),
     Offer(
       name: 'Miniso',
-      code: 'MINISO50',
-      sale: '50% discount off stationery',
+      code: 'MINISO20',
+      sale: '20% discount off other items',
       expiryDate: DateTime(2020, 12, 31, 23, 59),
     )
   ];
@@ -151,7 +150,6 @@ class _OffersState extends State<Offers> {
                     Flexible(
                       child: TextField(
                         controller: _searchQueryController,
-                        autofocus: true,
                         style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           hintText: 'Search',
