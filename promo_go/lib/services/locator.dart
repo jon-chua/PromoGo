@@ -5,6 +5,7 @@ import 'package:http/io_client.dart';
 import 'package:intl/intl.dart';
 import 'package:promogo/constants.dart';
 import 'package:promogo/models/merchant.dart';
+import 'package:promogo/services/database.dart';
 import 'package:promogo/visa/visa-authentication.dart';
 
 import 'user_location.dart';
@@ -22,6 +23,11 @@ class LocationService {
     var userLat = userLocationData.latitude;
     var userLong = userLocationData.longitude;
     IOClient client = await VisaAuthentication.visaAuthClient();
+    var promoList = await DatabaseService().getPromoList;
+    var promoMerchant = [];
+    for (var m in promoList) {
+      promoMerchant.add(m.merchant);
+    }
 
     for (var cat in kMerchantList) {
       var postBody = {
@@ -67,7 +73,9 @@ class LocationService {
             visaMerchantId: merchant["visaMerchantId"],
             visaStoreId: merchant["visaStoreId"],
           );
-          merchantList.add(m);
+          if (promoMerchant.contains(m)) {
+            merchantList.add(m);
+          }
         }
       }
     }

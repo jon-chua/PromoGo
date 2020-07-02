@@ -1,13 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:promogo/visa/visa-merchant-offers.dart';
+import 'package:promogo/services/database.dart';
 
-import 'payments.dart';
-import '../../widgets/small_white_card.dart';
-import '../../shared/constants.dart';
 import '../../models/offer.dart';
+import '../../shared/constants.dart';
+import '../../widgets/small_white_card.dart';
+import 'payments.dart';
 
 enum Filter {
   all,
@@ -15,6 +12,8 @@ enum Filter {
 }
 
 class Offers extends StatefulWidget {
+  static const routeName = '/offers';
+
   @override
   _OffersState createState() => _OffersState();
 }
@@ -24,15 +23,16 @@ class _OffersState extends State<Offers> {
   List<Offer> offers = [
     Offer(
       name: 'Miniso',
-      description: 'Electronics & Technology | Home & Furnishing | Junction 8',
+//      description: 'Electronics & Technology | Home & Furnishing | Junction 8',
+      code: 'MINISO50',
       sale: '50% discount off stationery',
-      outletsNum: 2,
+      expiryDate: DateTime(2020, 12, 31, 23, 59),
     ),
     Offer(
       name: 'Miniso',
-      description: 'Electronics & Technology | Home & Furnishing | Junction 8',
+      code: 'MINISO50',
       sale: '50% discount off stationery',
-      outletsNum: 2,
+      expiryDate: DateTime(2020, 12, 31, 23, 59),
     )
   ];
 
@@ -110,29 +110,20 @@ class _OffersState extends State<Offers> {
 //    getOffers();
   }
 
-  void getOffers() async {
-    Response merchantOffers = await VisaMerchantOffers.getMerchantOffers();
-
-    var json = jsonDecode(merchantOffers.body);
-
+  void getOffers(merchantName) async {
     List<Offer> newOffers = new List<Offer>();
-    for (var offer in json['Offers']) {
-      String offerName = offer['merchantList'][0]["merchant"].toString();
-      String description = offer['shareTitle'].toString();
-      String sale = offer["offerTitle"].toString();
-      String imageUrl = offer['merchantList'][0]['merchantImages'][0]
-              ['fileLocation']
-          .toString();
-
-      Offer newOffer = new Offer(
-          name: offerName,
-          description: description,
-          sale: sale,
-          imageUrl: imageUrl,
-          outletsNum: 1);
-      newOffers.add(newOffer);
+    var promoList = await DatabaseService().getPromoList;
+    for (var promo in promoList) {
+      if (promo.merchant.name == merchantName) {
+        Offer newOffer = new Offer(
+            name: merchantName,
+            sale: promo.discount.toString(),
+            expiryDate: promo.expiryDate,
+            code: promo.promoCode,
+            imageUrl: promo.merchant.url);
+        newOffers.add(newOffer);
+      }
     }
-
     setState(() {
       offers = newOffers;
     });
@@ -140,6 +131,9 @@ class _OffersState extends State<Offers> {
 
   @override
   Widget build(BuildContext context) {
+    var merchantName = ModalRoute.of(context).settings.arguments;
+    getOffers(merchantName);
+
     if (offers == null) {
       return new Container();
     } else {
@@ -189,7 +183,7 @@ class _OffersState extends State<Offers> {
                       },
                       child: Chip(
                         backgroundColor:
-                            filter == Filter.all ? orangeColor : lightGreyColor,
+                        filter == Filter.all ? orangeColor : lightGreyColor,
                         label: Text(
                           'Targeted',
                           style: TextStyle(
@@ -241,8 +235,10 @@ class _OffersState extends State<Offers> {
                           Navigator.of(context).pushNamed(Payments.routeName);
                         },
                         leading: CircleAvatar(
-                          backgroundImage:
-                              AssetImage(filteredOffers[i].imageUrl == null ? 'assets/images/miniso.jpg' : filteredOffers[i].imageUrl),
+                          backgroundImage: AssetImage(
+                              filteredOffers[i].imageUrl == null
+                                  ? 'assets/images/miniso.jpg'
+                                  : filteredOffers[i].imageUrl),
                           radius: 30,
                         ),
                         title: Text(
@@ -252,20 +248,22 @@ class _OffersState extends State<Offers> {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(filteredOffers[i].description),
+                            Text('Promo Code: ${filteredOffers[i].code}'),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Icon(
                                   Icons.local_offer,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme
+                                      .of(context)
+                                      .primaryColor,
                                 ),
                                 SizedBox(width: 3),
                                 Text(filteredOffers[i].sale),
                               ],
                             ),
                             Text(
-                              '${filteredOffers[i].outletsNum} offers around you',
+                              'Expired Date: ${filteredOffers[i].expiryDate}',
                               style: TextStyle(
                                   color: mediumGreyColor, fontSize: 12),
                             ),
