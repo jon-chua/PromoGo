@@ -26,6 +26,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
         LatLng(userLocationData.latitude, userLocationData.longitude)));
 
     final merchants = await locationService.getMerchantLocation();
+    print(merchants.length);
 
     setState(() {
       _markers.clear();
@@ -39,9 +40,11 @@ class _GoogleMapsState extends State<GoogleMaps> {
             title: merchant.name + " at " + merchant.address,
             snippet: "Capture me now!",
             onTap: () async {
-              final result = await Navigator.pushNamed(context, AR.routeName, arguments: merchant.name);
+              final result = await Navigator.pushNamed(context, AR.routeName,
+                  arguments: merchant.name);
               Scaffold.of(context)
-                ..showSnackBar(SnackBar(content: Text("You captured a promotion at $result!")));
+                ..showSnackBar(SnackBar(
+                    content: Text("You captured a promotion at $result!")));
             },
           ),
         );

@@ -24,9 +24,9 @@ class LocationService {
     var userLong = userLocationData.longitude;
     IOClient client = await VisaAuthentication.visaAuthClient();
     var promoList = await DatabaseService().getPromoList;
-    var promoMerchant = [];
+    List<String> promoMerchant = [];
     for (var m in promoList) {
-      promoMerchant.add(m.merchant);
+      promoMerchant.add(m.merchant.name);
     }
 
     for (var cat in kMerchantList) {
@@ -73,7 +73,8 @@ class LocationService {
             visaMerchantId: merchant["visaMerchantId"],
             visaStoreId: merchant["visaStoreId"],
           );
-          if (promoMerchant.contains(m)) {
+          if (promoMerchant.contains(m.name)) {
+            print(m.name);
             merchantList.add(m);
           }
         }
