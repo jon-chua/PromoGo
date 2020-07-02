@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:promogo/screens/home/offers.dart';
+import 'package:promogo/models/localstate.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 
 class AR extends StatefulWidget {
@@ -59,7 +59,14 @@ class _ARState extends State<AR> {
       builder: (BuildContext context) =>
           AlertDialog(content: Text("You found the promo!")),
     ).then((val) {
-      Navigator.pushNamed(context, Offers.routeName, arguments: merchantName);
+      print(merchantName);
+      LocalState.addOffer(merchantName);
+      Navigator.pop(context);
+//      Navigator.push(context, new MaterialPageRoute(
+//          builder: (context) =>
+//          new Offers()),
+//
+//      );
     });
   }
 

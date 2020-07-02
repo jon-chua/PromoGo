@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:promogo/services/database.dart';
 
 import '../../models/offer.dart';
+import '../../models/localstate.dart';
 import '../../shared/constants.dart';
 import '../../widgets/small_white_card.dart';
 import 'payments.dart';
@@ -107,7 +108,12 @@ class _OffersState extends State<Offers> {
   initState() {
     super.initState();
 
-//    getOffers();
+    List<String> merchantNames = LocalState.getOffers();
+    if (merchantNames.length != 0) {
+      for (String merchant in merchantNames) {
+        getOffers(merchant);
+      }
+    }
   }
 
   void getOffers(merchantName) async {
@@ -123,15 +129,13 @@ class _OffersState extends State<Offers> {
         setState(() {
           offers.add(newOffer);
         });
+        break;
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var merchantName = ModalRoute.of(context).settings.arguments;
-    getOffers(merchantName);
-
     if (offers == null) {
       return new Container();
     } else {
