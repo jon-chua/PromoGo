@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:promogo/models/promo.dart';
 import 'package:promogo/screens/AR/AR.dart';
 import 'package:promogo/services/locator.dart';
 import 'package:promogo/services/user_location.dart';
@@ -31,13 +30,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
     setState(() {
       _markers.clear();
 
-//      List<Promo> promoList;
-
       for (final merchant in merchants) {
-//        print("Printing merchants");
-//        print(merchant);
-//        Promo p = Promo(merchant: merchant);
-//        promoList.add(p);
         final marker = Marker(
           markerId: MarkerId(merchant.name),
           position: LatLng(double.parse(merchant.latitude),
@@ -46,17 +39,12 @@ class _GoogleMapsState extends State<GoogleMaps> {
             title: merchant.name + " at " + merchant.address,
             snippet: "Capture me now!",
             onTap: () {
-              Navigator.pushNamed(context, AR.routeName);
+              Navigator.pushNamed(context, AR.routeName, arguments: merchant.name);
             },
           ),
         );
         _markers[merchant.name] = marker;
       }
-
-//      print("Printing promoList");
-//      for (Promo p in promoList) {
-//        print(p);
-//      }
     });
   }
 

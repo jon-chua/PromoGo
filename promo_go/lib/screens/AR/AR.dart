@@ -14,6 +14,7 @@ class AR extends StatefulWidget {
 class _ARState extends State<AR> {
   ArCoreController arCoreController;
   Uint8List imageData;
+  String merchantName;
 
   @override
   void initState() {
@@ -28,6 +29,8 @@ class _ARState extends State<AR> {
 
   @override
   Widget build(BuildContext context) {
+    merchantName = ModalRoute.of(context).settings.arguments;
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -54,7 +57,7 @@ class _ARState extends State<AR> {
       builder: (BuildContext context) =>
           AlertDialog(content: Text("You found the promo!")),
     ).then((val) {
-      Navigator.pop(context);
+      Navigator.pop(context, merchantName);
     });
   }
 
