@@ -61,12 +61,7 @@ class _ARState extends State<AR> {
     ).then((val) {
       print(merchantName);
       LocalState.addOffer(merchantName);
-      Navigator.pop(context);
-//      Navigator.push(context, new MaterialPageRoute(
-//          builder: (context) =>
-//          new Offers()),
-//
-//      );
+      Navigator.pop(context, merchantName);
     });
   }
 

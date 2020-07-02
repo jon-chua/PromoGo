@@ -122,7 +122,7 @@ class _OffersState extends State<Offers> {
       if (promo.merchant.name == merchantName) {
         Offer newOffer = new Offer(
             name: merchantName,
-            sale: promo.discount.toString(),
+            sale: promo.discount.toString() + "% off",
             expiryDate: promo.expiryDate,
             code: promo.promoCode,
             imageUrl: promo.merchant.url);
@@ -234,12 +234,12 @@ class _OffersState extends State<Offers> {
                       color: Colors.white,
                       child: ListTile(
                         onTap: () {
-                          Navigator.of(context).pushNamed(Payments.routeName);
+                          Navigator.of(context).pushNamed(Payments.routeName, arguments: filteredOffers[i].name);
                         },
                         leading: CircleAvatar(
                           backgroundImage: AssetImage(
                               filteredOffers[i].imageUrl == null
-                                  ? 'assets/images/miniso.jpg'
+                                  ? 'assets/images/visa2.jpg'
                                   : filteredOffers[i].imageUrl),
                           radius: 30,
                         ),

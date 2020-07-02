@@ -40,8 +40,11 @@ class _GoogleMapsState extends State<GoogleMaps> {
             title: merchant.name + " at " + merchant.address,
             snippet: "Capture me now!",
             onTap: () async {
-              Navigator.pushNamed(context, AR.routeName,
+              var result = await Navigator.pushNamed(context, AR.routeName,
                   arguments: merchant.name);
+              Scaffold.of(context)
+                ..removeCurrentSnackBar()
+                ..showSnackBar(SnackBar(content: Text("You captured a promo at $result!")));
             },
           ),
         );

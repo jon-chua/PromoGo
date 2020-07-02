@@ -11,6 +11,8 @@ class Payments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final merchantName = ModalRoute.of(context).settings.arguments;
+
     return Material(
       color: lightGreyColor,
       child: Column(
@@ -58,14 +60,14 @@ class Payments extends StatelessWidget {
                     radius: 55,
                     backgroundColor: Colors.white,
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/miniso.jpg'),
+                      backgroundImage: AssetImage('assets/images/visa2.jpg'),
                       radius: 53,
                       backgroundColor: lightGreyColor,
                     ),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'You are paying',
+                    'You are paying $merchantName',
                     style: TextStyle(
                       color: Colors.white,
                     ),
