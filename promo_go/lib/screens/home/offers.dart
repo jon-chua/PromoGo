@@ -111,7 +111,6 @@ class _OffersState extends State<Offers> {
   }
 
   void getOffers(merchantName) async {
-    List<Offer> newOffers = new List<Offer>();
     var promoList = await DatabaseService().getPromoList;
     for (var promo in promoList) {
       if (promo.merchant.name == merchantName) {
@@ -121,12 +120,11 @@ class _OffersState extends State<Offers> {
             expiryDate: promo.expiryDate,
             code: promo.promoCode,
             imageUrl: promo.merchant.url);
-        newOffers.add(newOffer);
+        setState(() {
+          offers.add(newOffer);
+        });
       }
     }
-    setState(() {
-      offers = newOffers;
-    });
   }
 
   @override
@@ -183,7 +181,7 @@ class _OffersState extends State<Offers> {
                       },
                       child: Chip(
                         backgroundColor:
-                        filter == Filter.all ? orangeColor : lightGreyColor,
+                            filter == Filter.all ? orangeColor : lightGreyColor,
                         label: Text(
                           'Targeted',
                           style: TextStyle(
